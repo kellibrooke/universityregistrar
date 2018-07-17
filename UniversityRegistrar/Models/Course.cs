@@ -157,7 +157,7 @@ namespace UniversityRegistrar.Models
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
             int courseId = 0;
-            string courseName = 0;
+            string courseName = "";
             string CRN = "";
 
             while (rdr.Read())

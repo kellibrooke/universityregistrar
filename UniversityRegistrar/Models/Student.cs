@@ -113,7 +113,7 @@ namespace UniversityRegistrar.Models
 
             return allCourses;
         }
-          
+
         public List<Course> GetAllCourses()
         {
             return Course.GetAll();
@@ -215,7 +215,6 @@ namespace UniversityRegistrar.Models
             {
                 conn.Dispose();
             }
-
-
+        }
     }
 }

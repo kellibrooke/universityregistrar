@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UniversityRegistrar.Models;
+using UniversityRegistrar;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +15,7 @@ namespace UniversityRegistrar.Controllers
         [HttpGet("/courses/new")]
         public IActionResult CourseForm()
         {
-            return View(Student.GetAll());
+            return View();
         }
 
         [HttpPost("/courses/new")]
@@ -43,5 +44,29 @@ namespace UniversityRegistrar.Controllers
             model.Add("students", studentList);
             return View(model);
         }
+
+        [HttpPost("/courses/{id}/delete")]
+        public IActionResult Delete(int id)
+        {
+            Course newCourse = Course.Find(id);
+            newCourse.Delete();
+            return RedirectToAction("ViewAllCourses");
+        }
+
+        [HttpGet("/courses/{id}/update")]
+        public IActionResult UpdateForm(int id)
+        {
+            Course newCourse = Course.Find(id);
+            return View(newCourse);
+        }
+
+        [HttpPost("/courses/{id}/update")]
+        public IActionResult Update(string newName, string newCRN, int id)
+        {
+            Course newCourse = Course.Find(id);
+            newCourse.Edit(newName, newCRN);
+            return RedirectToAction("ViewAllCourses");
+        }
     }
 }
+

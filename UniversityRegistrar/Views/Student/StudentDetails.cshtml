@@ -19,3 +19,15 @@
             }
         </div>
     </div>
+    <form action="/students/@Model["student"].Id/add-course" method="post">
+        <div class="form-group">
+            <label for="course">Select Course</label>
+            <select name="course">
+                @foreach(var course in Model["student"].GetAllCourses())
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Course</button>
+      </form>

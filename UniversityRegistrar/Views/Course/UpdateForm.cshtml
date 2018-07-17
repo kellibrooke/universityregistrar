@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <form action="/courses/@Model.Id/update" method="post">
+            <div class="form-group">
+                <label for="newName">Enter Course Name</label>
+                <input type="text" id="newName" name="newName" value="@Model.Name" required />
+            </div>
+            <div class="form-group">
+                <label for="newCRN">Enter Course Registration Number</label>
+                <input type="text" id="newCRN" name="newCRN" value="@Model.CRN" required />
+            </div>
+            <button class="btn btn-primary" type="submit">Update</button>
+            <a href="/" class="btn btn-primary">Return to Home</a>
+        </form>
+    </div>
+</div>

@@ -12,15 +12,6 @@
                 <input type="text" id="name" name="name" required />
             </div>
             <div class="form-group">
-                <label for="course">Select Student To Add</label>
-                <select name="course">
-                    @foreach(var student in Model)
-                    {
-                        <option value="@student.Id">@student.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="crn">Enter Course Registration Number</label>
                 <input type="text" id="crn" name="crn" required />
             </div>

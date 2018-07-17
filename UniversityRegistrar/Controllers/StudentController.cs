@@ -43,5 +43,29 @@ namespace UniversityRegistrar.Controllers
             model.Add("courses", courseList);
             return View(model);
         }
+
+        [HttpGet("/students/{id}/update")]
+        public IActionResult UpdateForm(int id)
+        {
+            Student newStudent = Student.Find(id);
+            return View(newStudent);
+        }
+
+        [HttpPost("/students/{id}/update")]
+        public IActionResult Update(string newName, DateTime newDOE, int id)
+        {
+            Student newStudent = Student.Find(id);
+            newStudent.Edit(newName, newDOE);
+            return RedirectToAction("ViewAllStudents");
+        }
+
+        [HttpPost("/students/{id}/add-course")]
+        public IActionResult AddCourse(int course, int id)
+        {
+            Course newCourse = Course.Find(course);
+            Student newStudent = Student.Find(id);
+            newStudent.AddCourse(newCourse);
+            return RedirectToAction("StudentDetails");
+        }
     }
 }

@@ -194,21 +194,23 @@ namespace UniversityRegistrar.Models
             }
         }
 
-        public void Edit(string name, string crn, int newStudentId)
+        public void Edit(string newName, string newCRN)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE courses SET name = @Name, crn = @CRN  WHERE id = @searchId; UPDATE students_courses SET student_id = @newStudentId WHERE course_id = @searchId";
+            cmd.CommandText = @"UPDATE courses SET name = @Name, crn = @CRN  WHERE id = @searchId;";
 
-            cmd.Parameters.AddWithValue("@Name", this.Name);
-            cmd.Parameters.AddWithValue("@CRN", this.CRN);
-            cmd.Parameters.AddWithValue("@searchId", this.Id);
+
+            cmd.Parameters.AddWithValue("@Name", newName);
+            cmd.Parameters.AddWithValue("@CRN", newCRN);
+            cmd.Parameters.AddWithValue("@searchId", Id);
 
             cmd.ExecuteNonQuery();
-            this.Name = name;
-            this.CRN = crn;
+            this.Name = newName;
+            this.CRN = newCRN;
+            //this.Id = id;
 
             conn.Close();
             if (conn != null)

@@ -87,20 +87,20 @@ namespace UniversityRegistrar.Models
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT students.* FROM courses
-                                JOIN students_courses ON (student.id = students_courses.course_id)
-                                JOIN courses ON (students_courses.courses_id = courses.id)
-                                WHERE students.id = @StudentId;";
+                                JOIN students_courses ON (courses.id = students_courses.course_id)
+                                JOIN students ON (students_courses.student_id = students.id)
+                                WHERE course_id = @CourseId;";
 
-            cmd.Parameters.AddWithValue("@StudentId", this.Id);
+            cmd.Parameters.AddWithValue("@CourseId", this.Id);
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
             List<Student> allStudents = new List<Student> { };
 
             while (rdr.Read())
             {
-                int studentId = rdr.GetInt32(1);
-                string studentName = rdr.GetString(2);
-                DateTime enrollmentDate = rdr.GetDateTime(3);
+                int studentId = rdr.GetInt32(0);
+                string studentName = rdr.GetString(1);
+                DateTime enrollmentDate = rdr.GetDateTime(2);
                 Student newStudent = new Student(studentName, enrollmentDate, studentId);
                 allStudents.Add(newStudent);
             }
@@ -150,9 +150,9 @@ namespace UniversityRegistrar.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM courses WHERE id = @thisId;";
+            cmd.CommandText = @"SELECT * FROM courses WHERE id = @courseId;";
 
-            cmd.Parameters.AddWithValue("@CourseId", id);
+            cmd.Parameters.AddWithValue("@courseId", id);
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
 

@@ -11,13 +11,13 @@ namespace UniversityRegistrar.Controllers
 {
     public class StudentController : Controller
     {
-        [HttpGet("/new-student")]
+        [HttpGet("/students/new")]
         public IActionResult StudentForm()
         {
             return View(Course.GetAll());
         }
 
-        [HttpPost("/new-student")]
+        [HttpPost("/students/new")]
         public IActionResult CreateStudent(string studentName, DateTime dateEnrolled, int course)
         {
             Student newStudent = new Student(studentName, dateEnrolled);
@@ -27,11 +27,21 @@ namespace UniversityRegistrar.Controllers
             return RedirectToAction("ViewAllStudents");
         }
 
-        [HttpGet("/view-all-students")]
+        [HttpGet("/students")]
         public IActionResult ViewAllStudents()
         {
             return View(Student.GetAll());
         }
 
+        [HttpGet("/students/{id}/details")]
+        public IActionResult StudentDetails(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Student newStudent = Student.Find(id);
+            List<Course> courseList = newStudent.GetCourses();
+            model.Add("student", newStudent);
+            model.Add("courses", courseList);
+            return View(model);
+        }
     }
 }

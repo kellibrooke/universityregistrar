@@ -86,10 +86,10 @@ namespace UniversityRegistrar.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT students.* FROM courses
-                                JOIN students_courses ON (student.id = students_courses.course_id)
-                                JOIN courses ON (students_courses.courses_id = courses.id)
-                                WHERE students.id = @StudentId;";
+            cmd.CommandText = @"SELECT courses.* FROM students
+                                JOIN students_courses ON (students.id = students_courses.student_id)
+                                JOIN courses ON (students_courses.course_id = courses.id)
+                                WHERE student_id = @StudentId;";
 
             cmd.Parameters.AddWithValue("@StudentId", this.Id);
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -150,9 +150,9 @@ namespace UniversityRegistrar.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM students WHERE id = @thisId;";
+            cmd.CommandText = @"SELECT * FROM students WHERE id = @studentId;";
 
-            cmd.Parameters.AddWithValue("@StudentId", id);
+            cmd.Parameters.AddWithValue("@studentId", id);
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
